@@ -1,118 +1,45 @@
-# POKIE
+# BK Pachislot AI
 
-[![npm version](https://badge.fury.io/js/pokie.svg)](https://badge.fury.io/js/pokie)
+パチスロロジックエンジン — [pokie](https://github.com/sta-ger/pokie) フレームワークベース
 
-_In Australia, they call slot machines "pokies"._
+## 🏯 吉宗（大都技研・4号機）エンジン
 
-Introducing **POKIE**, a server-side video slot game logic framework for JavaScript and TypeScript.
+`src/yoshimune/` に実装済み。
 
-`npm install pokie`
+### モジュール構成
 
-## Use cases
+| ファイル | 内容 |
+|---|---|
+| `YoshimuneConfig.ts` | 設定1-6の確率テーブル、モード定義、天井、払い出し定数 |
+| `YoshimuneModeManager.ts` | 通常A/通常B/天国の3モード管理、天井カウント、モード移行抽選 |
+| `YoshimuneBonusStock.ts` | ストック制御、BIG中の次回ボーナス抽選（最大4連） |
+| `YoshimuneSymbols.ts` | シンボルID定義（7/BAR/チェリー/松/スイカ/ベル/リプレイ） |
+| `YoshimuneReels.ts` | 3リール×21コマのリール配列 |
+| `YoshimuneSession.ts` | メインゲームセッション（全モジュール統合） |
 
-### Back-End
+### 吉宗の内部仕様
 
-Utilize **POKIE** to implement the video slot game mechanics on the Back-End. Create and manage game sessions, serialize
-them, and transfer the payload to the game client through your API.
+- **モード制御**: 通常A (BB:RB=6:4), 通常B (BB:RB=4:6), 天国 (BB:RB=6:4, 天井193G)
+- **天井**: 通常A/B=1921G, 天国=193G
+- **ボーナス**: BIG=711枚, REG=127枚
+- **ストック**: BIG中に1/8で次回ボーナス当選→1G連（最大4連蓄積）
+- **小役解除**: チェリー1/32, 松1/160(天国確定), チャンス目1/13, 純ハズレ1/3276〜1/1092
+- **設定差**: 設定1(機械割93%)〜設定6(機械割119%)
 
-### Front-End
+### デモ実行
 
-When playing for fun, you can implement the standalone game logic on the client-side, relieving the servers from
-unnecessary load. Utilize simulations to showcase specific game features for demonstration purposes.
-
-### Math
-
-**POKIE** also serves as an essential tool for balancing the parameters of the slot game's math model, ensuring an immersive
-gaming experience. Configure the game session and run Monte Carlo simulations to guarantee that the model meets all
-necessary requirements.
-
-## Examples
-
-See the [examples](https://github.com/sta-ger/pokie-examples) of various video slot game mechanics implemented with
-**POKIE**.
-
-### Simple video slot game [[Demo](https://sta-ger.github.io/pokie-examples/simple-slot.html)] [[Code](https://github.com/sta-ger/pokie-examples/tree/main/src/games/simple-slot)]
-
-An example of a simple 5x4 video slot game with 8 winning lines.
-
-Features:
-- Winning lines are counted from right to left. A line of minimum 3 winning symbols pays out.
-- "Wild" is a wild symbol that substitutes any other symbol on a winning line.
-- "Scatter1" is a scatter symbol that pays out 10x, 20x, or 30x the bet if 3 or more symbols appear on any positions. Only one "Scatter1" can appear on any reel.
-- "Scatter2" is a stacked scatter symbol that can appear on the 3 middle reels. If all 3 middle reels are covered with "Scatter2" symbols, the game pays 100x the bet.
-
-### Video slot with free spins [[Demo](https://sta-ger.github.io/pokie-examples/slot-with-free-games.html)] [[Code](https://github.com/sta-ger/pokie-examples/tree/main/src/games/slot-with-free-games)]
-
-An example of a 5x3 video slot game with free spins.
-
-Features:
-- A minimum of 2 winning symbols on a winning line or scattered across all reels pays out.
-- During free spins, symbols on a winning line are counted not only from left to right but can also be scattered across the winning line definition.
-- During free spins, symbol sequences are different from the base game's ones. Sequences during free spins do not contain scatter symbols, so free spins cannot be re-triggered.
-- During free spins, all wins are multiplied by x2.
-- This example also demonstrates the usage of Simulation to obtain the desired game outcomes.
-
-### Video slot with sticky re-spin [[Demo](https://sta-ger.github.io/pokie-examples/slot-with-sticky-respin.html)] [[Code](https://github.com/sta-ger/pokie-examples/tree/main/src/games/slot-with-sticky-respin)]
-
-An example of a 5x3 video slot game with sticky re-spin feature. Every winning combination triggers the re-spin during which all the winning symbols are held on their places. The re-spins continue as long as there are new wins.
-
-### Exploring Video Slot Math with POKIE
-
-A [Medium](https://medium.com/@sta-ger/exploring-video-slot-math-with-pokie-3bc7191b72a0) article about how POKIE can be utilized for slot game math modelling.
-
-## Usage
-
-### Session
-
-Video slot game logic.
-
-```js
-import {VideoSlotSession} from "pokie";
-
-const session = new VideoSlotSession();
-
-session.play();
-
-session.getSymbolsCombination(); // symbols combination
-session.getWinAmount(); // total round win amount
-session.getWinningLines(); // winning lines data
-session.getWinningScatters(); // winning scatters data
+```bash
+npx tsx examples/yoshimune-demo.ts
 ```
 
-### Simulation
+設定1〜6で各1000G回し、ボーナス回数・機械割・天井到達回数などを表示します。
 
-Running a certain number of game rounds and calculating RTP.
+## セットアップ
 
-```js
-import {SimulationConfig, Simulation} from "pokie";
-
-const simulationConfig = new SimulationConfig();
-simulationConfig.setNumberOfRounds(10000);
-const simulation = new Simulation(session, simulationConfig);
-
-// set the callbacks if you want to control the session manually
-simulation.beforePlayCallback = () => {
-    console.log("Before play");
-};
-simulation.afterPlayCallback = () => {
-    console.log("After play");
-};
-simulation.onFinishedCallback = () => {
-    console.log("Simulation finished");
-};
-
-simulation.run(); // 10000 rounds will be played
-
-simulation.getRtp(); // RTP of the current session
+```bash
+npm install
 ```
 
-Capturing specific game features.
+## ライセンス
 
-```js
-const simulationConfig = new SimulationConfig();
-simulationConfig.setNumberOfRounds(Infinity);
-simulationConfig.setPlayStrategy(new PlayUntilSymbolWinStrategy("A"));
-
-const simulation = new Simulation(session, simulationConfig);
-simulation.run(); // the simulation will be stopped on any winning combination with symbol "A"
-```
+ISC

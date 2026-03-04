@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>吉宗 - パチスロシミュレータ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="cabinet">
+    <div id="title">吉 宗</div>
+
+    <div id="info-bar">
+      <span><span class="label">GAME </span><span class="value" id="game-count">0</span></span>
+      <span><span class="label">BIG </span><span class="value" id="big-count">0</span></span>
+      <span><span class="label">REG </span><span class="value" id="reg-count">0</span></span>
+    </div>
+
+    <div id="reel-window">
+      <div class="reel-col"><div class="reel-strip" id="reel-0"></div></div>
+      <div class="reel-col"><div class="reel-strip" id="reel-1"></div></div>
+      <div class="reel-col"><div class="reel-strip" id="reel-2"></div></div>
+    </div>
+
+    <div id="win-display"></div>
+
+    <div id="bonus-bar">
+      <span class="bonus-type" id="bonus-type-label"></span>
+      <span id="bonus-progress"></span>
+    </div>
+
+    <div id="lever-area">
+      <button id="lever-btn">レバーON</button>
+    </div>
+
+    <div id="stop-buttons">
+      <button class="stop-btn stopped" id="stop-left" disabled>左</button>
+      <button class="stop-btn stopped" id="stop-center" disabled>中</button>
+      <button class="stop-btn stopped" id="stop-right" disabled>右</button>
+    </div>
+
+    <div id="status-bar">
+      <div class="status-box">
+        <div class="label">CREDIT</div>
+        <div class="value" id="credit-val">5000</div>
+      </div>
+      <div class="status-box">
+        <div class="label">BET</div>
+        <div class="value" id="bet-val">3</div>
+      </div>
+      <div class="status-box">
+        <div class="label">WIN</div>
+        <div class="value" id="win-val">0</div>
+      </div>
+    </div>
+
+    <div id="settings-area">
+      <div class="label">設定変更</div>
+      <div class="row">
+        <button class="setting-btn active" data-setting="1">1</button>
+        <button class="setting-btn" data-setting="2">2</button>
+        <button class="setting-btn" data-setting="3">3</button>
+        <button class="setting-btn" data-setting="4">4</button>
+        <button class="setting-btn" data-setting="5">5</button>
+        <button class="setting-btn" data-setting="6">6</button>
+      </div>
+    </div>
+
+    <div id="debug-area">
+      <button id="debug-toggle">デバッグ情報</button>
+      <div id="debug-info"></div>
+    </div>
+  </div>
+
+  <div id="flash-overlay"></div>
+  <div id="bonus-banner"></div>
+
+  <script src="js/engine.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

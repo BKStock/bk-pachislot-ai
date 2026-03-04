@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="barGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="50%" style="stop-color:#cccccc"/>
+      <stop offset="100%" style="stop-color:#999999"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="25" width="84" height="50" rx="6" fill="#111"/>
+  <rect x="10" y="27" width="80" height="46" rx="5" fill="none" stroke="#d4af37" stroke-width="2"/>
+  <rect x="14" y="31" width="72" height="38" rx="3" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
+  <text x="50" y="60" text-anchor="middle" font-family="Impact, Arial Black, sans-serif" font-size="30" font-weight="900" fill="url(#barGrad)" letter-spacing="4">BAR</text>
+</svg>

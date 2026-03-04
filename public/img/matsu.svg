@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="matsuGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#33cc55"/>
+      <stop offset="100%" style="stop-color:#116622"/>
+    </linearGradient>
+  </defs>
+  <rect x="45" y="65" width="10" height="25" rx="2" fill="#8B4513"/>
+  <polygon points="50,8 30,40 70,40" fill="url(#matsuGrad)" stroke="#0a4a0a" stroke-width="1.5"/>
+  <polygon points="50,22 25,55 75,55" fill="url(#matsuGrad)" stroke="#0a4a0a" stroke-width="1.5"/>
+  <polygon points="50,38 20,70 80,70" fill="url(#matsuGrad)" stroke="#0a4a0a" stroke-width="1.5"/>
+</svg>

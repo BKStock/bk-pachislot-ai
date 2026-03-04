@@ -57,5 +57,8 @@
         "dist/",
         "src/",
         "package.json"
-    ]
+    ],
+    "dependencies": {
+        "express": "^5.2.1"
+    }
 }
